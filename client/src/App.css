@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font-weight: inherit;
+  outline: 0;
+  border: 0;
+  list-style: none;
+}
+
+*:focus {
+  outline: 0;
+  border: 0;
+}
+
+body {
+  background: #090c1e !important;
+  color: #fff !important;
+}
+
+.tablewrapper {
+  max-width: 750px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.formcontainer {
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+}
