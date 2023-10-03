@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Students />} />
         <Route path="/create" element={<CreateStudent />} />
-        <Route path="/update" element={<UpdateStudent />} />
+        <Route path="/update/:id" element={<UpdateStudent />} />
       </Routes>
     </div>
   );

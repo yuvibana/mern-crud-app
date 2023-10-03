@@ -9,7 +9,6 @@ export default function Students() {
   useEffect(() => {
     axios.get("http://localhost:3001")
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setStudent(res.data);
         } else Promise.reject();
@@ -39,7 +38,7 @@ export default function Students() {
               <td>{userdata.email}</td>
               <td>{userdata.rollno}</td>
               <td style={{ display: "flex", gap: "0 5px" }}>
-                <Link className="text-primary" to={`/update`}>
+                <Link className="text-primary" to={`/update/${userdata._id}`}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

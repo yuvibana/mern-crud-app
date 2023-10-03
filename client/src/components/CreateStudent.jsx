@@ -43,6 +43,7 @@ export default function CreateStudent() {
             value={formValues.name}
             type="text"
             name="name"
+            required
             onChange={handleInputChange}
           />
         </div>
@@ -53,6 +54,7 @@ export default function CreateStudent() {
             placeholder="Enter Email"
             type="email"
             name="email"
+            required
             value={formValues.email}
             onChange={handleInputChange}
           />
@@ -65,6 +67,7 @@ export default function CreateStudent() {
             type="number"
             value={formValues.rollno}
             name="rollno"
+            required
             onChange={handleInputChange}
           />
         </div>

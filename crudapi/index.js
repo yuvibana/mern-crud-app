@@ -16,8 +16,8 @@ app.listen(port, () => {
 // Making Connection With  MongoDB
 mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.db).then(() => {
-        console.log('Database successfully connected!')
-    },
+    console.log('Database successfully connected!')
+},
     error => {
         console.log('Could not connect to database : ' + error)
     }
@@ -31,6 +31,13 @@ app.post("/createstudent", (req, res) => {
 
 app.get("/", (req, res) => {
     StudentModel.find({})
+        .then(students => res.json(students))
+        .catch(err => err.json())
+});
+
+app.get("/getUser/:id", (req, res) => {
+    const id = req.params.id;
+    StudentModel.findById({ _id:id })
         .then(students => res.json(students))
         .catch(err => err.json())
 });
