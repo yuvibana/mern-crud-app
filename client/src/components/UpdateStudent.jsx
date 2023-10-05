@@ -1,10 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { FormGroup, Button } from "react-bootstrap";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function UpdateStudent() {
-
   const { id } = useParams();
   const Navigate = useNavigate();
 
@@ -14,30 +13,47 @@ export default function UpdateStudent() {
     rollno: "",
   });
 
-  useEffect(() => {
-    axios.get(`http://localhost:3001/getUser/${id}`)
-      .then(result => setFormValues(result.data))
-      .catch(err => console.log(err))
-  }, [])
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-  }
+  };
 
-  const onSubmit = (e) => {
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/getStudents/${id}`)
+      .then((result) => setFormValues(result.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const onUpdate = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:3001/updatestudent`, formValues)
-    Navigate('/')
-  }
-
-
-  console.log(formValues);
+    if (formValues.name === "" || formValues.length < 3) {
+      alert("Please Enter Name");
+      return;
+    }
+    if (formValues.email === "" || formValues.email < 18) {
+      alert("Please Enter Valid Email Address");
+      return;
+    }
+    if (formValues.rollno === "" || formValues.rollno < 1) {
+      alert("Please Enter Valid Roll No.");
+      return;
+    }
+    axios
+      .put(`http://localhost:3001/updateStudent/${id}`, formValues)
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Student Updated Successfully!");
+          Navigate("/");
+        } else Promise.reject();
+      })
+      .catch((err) => alert(`Something went wrong => ${err}`));
+  };
 
   return (
-    <div className='formcontainer'>
+    <div className="formcontainer">
       <h3>Update {formValues.name}'s detail</h3>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onUpdate}>
         <div className="formgoup mb-2">
           <label className="mb-1">Name</label>
           <input
@@ -46,7 +62,6 @@ export default function UpdateStudent() {
             value={formValues.name}
             type="text"
             name="name"
-            required
             onChange={handleInputChange}
           />
         </div>
@@ -57,7 +72,6 @@ export default function UpdateStudent() {
             placeholder="Enter Email"
             type="email"
             name="email"
-            required
             value={formValues.email}
             onChange={handleInputChange}
           />
@@ -70,26 +84,23 @@ export default function UpdateStudent() {
             type="number"
             value={formValues.rollno}
             name="rollno"
-            required
             onChange={handleInputChange}
           />
         </div>
-        <div className='d-flex justify-content-between'>
-          <Link
-            to={'/'}
-            className='btn p-2 d-block text-white secondary'
-            style={{ background: 'blue' }}
-          >Cancel
+        <div className="d-flex justify-content-between align-items-center">
+          <Link to={`/`} className="btn btn-primary">
+            Go Back
           </Link>
           <Button
             variant="outline-secondary"
             size="lg"
             block="block"
             type="submit"
-          >Update
+          >
+            Update
           </Button>
         </div>
       </form>
     </div>
-  )
+  );
 }
